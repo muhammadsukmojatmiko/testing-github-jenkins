@@ -1,13 +1,3 @@
-test
-test2
-test3
-test4
-test5
-test6
-test7
-test8
-test
-
 ## FIRST THINGS TO DO
 
 - Change API service default base URL in `.env.*` files. The default value is `BACKOFFICE` base URL
