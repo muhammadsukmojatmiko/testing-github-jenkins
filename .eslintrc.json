@@ -1,0 +1,41 @@
+{
+  "extends": ["next", "prettier"],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["testing-library", "@typescript-eslint", "prettier"],
+  "overrides": [
+    // Only uses Testing Library lint rules in test files
+    {
+      "files": [
+        "**/__tests__/**/*.[jt]s?(x)",
+        "**/?(*.)+(spec|test).[jt]s?(x)"
+      ],
+      "extends": ["plugin:testing-library/react"]
+    },
+    {
+      "files": ["*.js"],
+      "rules": {
+        "@typescript-eslint/no-var-requires": "off"
+      }
+    }
+  ],
+  "env": {
+    "node": true,
+    "browser": true,
+    "amd": true
+  },
+  "rules": {
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": ["@mui/*/*/*", "!@mui/material/test-utils/*"]
+      }
+    ],
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": false,
+        "trailingComma": "all"
+      }
+    ]
+  }
+}
