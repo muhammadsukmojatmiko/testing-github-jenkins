@@ -2,8 +2,6 @@
 FROM node:18-alpine
 
 # ARGUMENTS
-ARG ssh_prv_key
-ARG ssh_pub_key
 ARG github_token
 ARG build_command
 
@@ -14,9 +12,9 @@ RUN mkdir -p /root/.ssh && \
     ssh-keyscan github.com > ~/.ssh/known_hosts
 
 # ADD SSH PRIVATE & PUBLIC KEY
-RUN echo "$ssh_prv_key" > /root/.ssh/id_rsa && \
-    echo "$ssh_pub_key" > /root/.ssh/id_rsa.pub && \
-    chmod 600 /root/.ssh/id_rsa && \
+ADD id_rsa /root/.ssh/id_rsa
+ADD id_rsa /root/.ssh/id_rsa.pub
+RUN chmod 600 /root/.ssh/id_rsa && \
     chmod 600 /root/.ssh/id_rsa.pub
 
 # SET ENV
@@ -31,7 +29,7 @@ RUN yarn install
 RUN yarn $build_command
 
 # REMOVE CONFIDENTIAL DATA
-RUN rm -rf /root/.ssh/id_rsa && rm -rf /root/.ssh/id_rsa.pub
+RUN rm -rf /root/.ssh/id_rsa && rm -rf /root/.ssh/id_rsa.pub && rm -rf id_rsa && rm -rf id_rsa.pub
 ENV GITHUB_TOKEN=null
 
 # RUN APP
